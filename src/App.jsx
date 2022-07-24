@@ -1,0 +1,173 @@
+import {Route, Routes, useLocation} from "react-router-dom";
+import {Fragment, useState} from "react";
+import {useSelector} from "react-redux";
+import {useForm} from "react-hook-form";
+import {toast, ToastContainer} from "react-toastify";
+import {PhoneFilled} from "@ant-design/icons";
+import {Button, Modal} from "antd";
+import {Language} from "./lang/Languages";
+import Admin from "./pages/login/login";
+import OrdersAdmin from "./pages/orders_admin/orders_admin";
+import EditNews from "./pages/edit_clients/edit_clients";
+import CardsAdmin from "./pages/cards/cards";
+import AddCard from "./pages/add_card/add_card";
+import AdminClient from "./pages/clients_admin/clients_admin";
+import AddClients from "./pages/add_clients/add_clients";
+import StatisticsPage from "./pages/statistics/statistics";
+import Home from "./components/home/Home";
+import Aboutus from "./pages/aboutus/aboutus";
+import More from "./pages/more/More";
+import CardsCar from "./pages/cardsCar/CardsCar";
+import Komissia from "./pages/komissia/komissia";
+import Vikup from "./pages/vikup/vikup";
+import Otsenka from "./pages/otsenka/otsenka";
+import Trade from "./pages/trade_in/trade_in";
+import Sugurta from "./pages/sugurta/sugurta";
+import Credit from "./pages/credit/credit";
+import AutoPodbor from "./pages/autopodbor/autopodbor";
+import PhotoSale from "./pages/photosale/photosale";
+import Compare from "./pages/Compare/Compare";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
+import Cars from "./pages/Cars";
+import CreditAuto from "./pages/CreditAuto/CreditAuto";
+import Applications from "./pages/Applications/Applications";
+import Polezniy from "./pages/polezniye/polezniye";
+import "antd/dist/antd.min.css";
+import "./App.css";
+import axios from "axios";
+import Quality from "./pages/quality/quality";
+import Vacancy from "./pages/vacancy/vacancy";
+import Ourteam from "./pages/ourteam/ourteam";
+import Ourclients from "./pages/ourclients/ourclients";
+import UserLogin from "./pages/user_login/user_login";
+import Register from "./pages/register/register";
+import RequireAuth from "./utils/privateRoute";
+
+function App() {
+    const location = useLocation();
+    const {register, handleSubmit} = useForm();
+    const [compare, setCompare] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const {lang} = useSelector((state) => state.lang);
+    const {vikfourteen, m1, m2} = Language;
+
+    const addCompare = (car) => {
+        if (!!!compare.find((item) => item._id === car._id)) {
+            setCompare([...compare, car]);
+            toast.success(`${car.madel} solishtirishga qo'shildi`);
+        }
+    };
+
+    const onSubmit = (values) => {
+        axios
+            .post("http://185.196.214.145:5000/order/add", values)
+            .then((res) => setIsOpen(false))
+            .catch((err) => new Error(err));
+    };
+
+    return (
+        <Fragment>
+            {!/admin/g.test(location.pathname) &&
+            !/sign-in/g.test(location.pathname) &&
+            !/sign-up/g.test(location.pathname) &&
+            !/login/g.test(location.pathname) && <Header/>}
+            <ToastContainer/>
+            <Routes>
+                <Route path="/admin" element={<Admin/>}/>
+                <Route path="/sign-in" element={<UserLogin/>}/>
+                <Route path="/sign-up" element={<Register/>}/>
+                <Route path="/admin/orders" element={<OrdersAdmin/>}/>
+                <Route path="/admin/news_edit/:id" element={<EditNews/>}/>
+                <Route path="/admin/cards" element={<RequireAuth><CardsAdmin/></RequireAuth>}/>
+                <Route path="/admin/card/add" element={<AddCard/>}/>
+                <Route path="/admin/card/edit/:id" element={<AddCard/>}/>
+                <Route path="/admin/clients" element={<AdminClient/>}/>
+                <Route path="/admin/clients/add" element={<AddClients/>}/>
+                <Route path="/admin/clients/edit/:id" element={<AddClients/>}/>
+                <Route path="/admin/statistic/all" element={<StatisticsPage/>}/>
+                <Route path="/aboutus" element={<Aboutus/>}/>
+                <Route path="/" element={<Home addCompare={addCompare}/>}/>
+                <Route
+                    path="/compare"
+                    element={<Compare compare={compare} setCompare={setCompare}/>}
+                />
+                <Route path="/more/:id" element={<More/>}/>
+                <Route path="/ourclients" element={<Ourclients/>}/>
+                <Route path="/cards" element={<CardsCar/>}/>
+                <Route path="/komissia" element={<Komissia/>}/>
+                <Route path="/vikupAvto" element={<Vikup/>}/>
+                <Route path="/otsenka" element={<Otsenka/>}/>
+                <Route path="/trade_in" element={<Trade/>}/>
+                <Route path="/insurance" element={<Sugurta/>}/>
+                <Route path="/creditauto" element={<Credit/>}/>
+                <Route path="/qualitypolicy" element={<Quality/>}/>
+                <Route path="/ourteam" element={<Ourteam/>}/>
+                <Route path="/vacancy" element={<Vacancy/>}/>
+                <Route path="/autopodbor" element={<AutoPodbor/>}/>
+                <Route path="/photosale" element={<PhotoSale/>}/>
+                <Route path="/cars" element={<Cars addCompare={addCompare}/>}/>
+                <Route path="/credit/:id" element={<CreditAuto/>}/>
+                <Route path="/admin/applications" element={<Applications/>}/>
+                <Route path="/useful" element={<Polezniy/>}/>
+                <Route path="/admin/application/:id" element={<Applications/>}/>
+            </Routes>
+            <Button
+                shape="circle"
+                icon={<PhoneFilled/>}
+                size="large"
+                color="yellow"
+                className="call-button"
+                onClick={() => setIsOpen(!isOpen)}
+            />
+            <Modal
+                visible={isOpen}
+                // onOk={() => setIsOpen(!isOpen)}
+                onCancel={() => setIsOpen(!isOpen)}
+                footer={false}
+            >
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="sale-card_wrapper">
+                        <h4>{vikfourteen[lang]}</h4>
+                        <br/>
+                        <div className="input-wrap">
+                            <span className="material-symbols-outlined">person</span>
+                            <input
+                                {...register("ismiz", {required: true})}
+                                type="text"
+                                className="form-control page_title_uz"
+                                placeholder={m1[lang]}
+                            />
+                        </div>
+                        <div className="input-wrap">
+                            <span className="material-symbols-outlined">phone</span>
+                            <input
+                                {...register("phone", {required: true})}
+                                type="number"
+                                className="form-control page_title_uz"
+                                placeholder={m2[lang]}
+                            />
+                        </div>
+                    </div>
+                    <div style={{display: "flex"}}>
+                        <Button onClick={() => setIsOpen(!isOpen)}>Cancel</Button>
+                        <Button
+                            key="submit"
+                            htmlType="submit"
+                            style={{marginLeft: "auto"}}
+                        >
+                            Submit
+                        </Button>
+                    </div>
+                </form>
+            </Modal>
+            {!/admin/g.test(location.pathname) &&
+            !/sign-in/g.test(location.pathname) &&
+            !/sign-up/g.test(location.pathname) &&
+            !/login/g.test(location.pathname) && <Footer/>}
+        </Fragment>
+    );
+}
+
+export default App;
