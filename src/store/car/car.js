@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { addcar, editcar, getcar, getcars, rauto } from '../api'
+import {MainApi} from "../../api";
 
 const car = createSlice({
     name: 'car',
@@ -43,7 +44,7 @@ const car = createSlice({
 
 export const getCars = () =>
     rauto({
-        url: getcars,
+        url: `${MainApi}/car/all`,
         method: 'get',
         onStart: car.actions.onStart.type,
         onSuccess: car.actions.getCars.type,

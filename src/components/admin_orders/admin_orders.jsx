@@ -1,15 +1,16 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import {useEffect, useState} from 'react'
+import Orders from "../orders/orders";
+import {MainApi} from "../../api";
+import {Modal} from "antd";
+import {ExclamationCircleOutlined} from "@ant-design/icons";
 
 function AdminOrders() {
     const [orders, setOrders] = useState([])
     const getOrders = () => {
         axios
-            .get('http://185.196.214.145:5000/order/all')
+            .get(`${MainApi}/order/all`)
             .then(res => {
-                console.log(res)
-                console.log('keldi')
                 setOrders(res.data)
             })
             .catch(err => {
@@ -18,14 +19,21 @@ function AdminOrders() {
     }
 
     const deleteOrder = id => {
-        axios
-            .delete(`http://185.196.214.145:5000/order/${id}`)
-            .then(res => {
-                getOrders()
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        Modal.confirm({
+            centered: true,
+            title: "Order o'chirish",
+            icon: <ExclamationCircleOutlined/>,
+            onOk() {
+                axios
+                    .delete(`${MainApi}/order/${id}`)
+                    .then(res => {
+                        getOrders()
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            },
+        })
     }
 
     useEffect(() => {
@@ -52,43 +60,7 @@ function AdminOrders() {
                     </a>
                     <h4 className='mt-0 mb-4'>Buyurtma beruvchilar ro'yhati</h4>
                     <div className='table-responsive'>
-                        <table className='table table-hover mt-5'>
-                            <thead className='thead-dark'>
-                                <tr className='textAlign'>
-                                    <th scope='col'>Ism</th>
-                                    <th scope='col'>Sana</th>
-                                    <th scope='col'>Tel. Raqam</th>
-                                    <th scope='col'>Link</th>
-                                    <th scope='col'>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody className='thead-dark'>
-                                {orders.length &&
-                                    orders.map((item, index) => (
-                                        <tr key={index}>
-                                            <td>{item.ismiz}</td>
-                                            <td>{item?.createdAt?.slice(0, 10)}</td>
-                                            <td>{!!item.phone ? item.phone : 'No Phone'}</td>
-                                            <td>
-                                                {item.id && (
-                                                    <Link to={`/more/${item.id}`}>To product</Link>
-                                                )}
-                                            </td>
-                                            <td>
-                                                <button
-                                                    onClick={() => deleteOrder(item._id)}
-                                                    style={{
-                                                        border: '1px solid black',
-                                                        padding: '5px 10px',
-                                                    }}
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
+                        <Orders dataSource={orders} deleteOrder={deleteOrder}/>
                     </div>
                 </div>
             </div>

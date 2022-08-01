@@ -12,7 +12,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@tinymce/tinymce-react": "^3.14.0",
-    "antd": "^4.20.7",
+    "antd": "^4.21.7",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "fontawesome": "^5.6.3",
@@ -22,6 +22,7 @@
     "particles-bg": "^2.5.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-excel-renderer": "^1.1.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.32.2",
     "react-redux": "^8.0.2",
@@ -29,6 +30,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "react-toastify": "^9.0.2",
+    "reactstrap": "^9.1.2",
     "swiper": "^8.1.6",
     "tinymce": "^6.0.1",
     "web-vitals": "^2.1.4"
@@ -56,5 +58,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "html-loader": "^4.1.0"
   }
 }

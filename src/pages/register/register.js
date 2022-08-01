@@ -23,7 +23,9 @@ function Register() {
         if (values?.name !== "" || values?.email !== "" || values?.password !== "") {
             axios.post(`user/add`, values).then(e => {
                     localStorage.setItem("user_token", "KLJLJKKJLJKLKJLJKKHGIGHGHKJKJKJLKKLJKJLJLKJKLHJJKJK");
-                        navigate("/admin/cards")
+                    localStorage.removeItem("bank_token")
+                    localStorage.removeItem("admin_token")
+                    navigate("/admin/cards")
                 }
             )
                 .catch(err => console.error(err))

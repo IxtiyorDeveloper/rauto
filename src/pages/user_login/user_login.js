@@ -34,7 +34,8 @@ function UserLogin() {
                     }
                 ).then(
                     e => {
-                        localStorage.setItem("user_token", e.data.token)
+                        localStorage.setItem("user_id", e?.data?.data?._id)
+                        localStorage.setItem("user_token", e.data.data?.token)
                         localStorage.removeItem("bank_token")
                         localStorage.removeItem("admin_token")
                         navigate('/admin/cards')
@@ -48,10 +49,10 @@ function UserLogin() {
                         password: values?.password,
                     }
                 ).then(e => {
-                        localStorage.setItem("bank_token", e.data.token)
+                        localStorage.setItem("bank_token", e.data.data?.token)
                         localStorage.removeItem("user_token")
                         localStorage.removeItem("admin_token")
-                        navigate('/admin/cards')
+                        navigate('/admin/applications')
                     }
                 ).catch(e => console.log(e))
             }

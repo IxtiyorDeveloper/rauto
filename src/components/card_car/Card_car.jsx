@@ -18,39 +18,39 @@ const CardCar = ({ car, addCompare }) => {
     return (
         <div className='cards__card card'>
             <div className='card__img'>
-                <img src={car.photo[0]} alt='img' />
+                <img src={car?.photo?.[0]} alt='img' />
             </div>
             <p className='card__title'>
-                {car.marka} {car.madel} {car.yili}{' '}
+                {car?.marka} {car?.madel} {car?.yili}{' '}
             </p>
             <ul className='card__info'>
                 <li className='card__item'>
                     <span className='material-symbols-outlined'>local_gas_station</span>
                     <strong>{car1[lang]}</strong>
-                    {car.yoqilgi}
+                    {car?.yoqilgi}
                 </li>
                 <li className='card__item'>
                     <span className='material-symbols-outlined'>settings</span>
                     <strong> {car2[lang]}</strong>
-                    {car.transmission}
+                    {car?.transmission}
                 </li>
                 <li className='card__item'>
                     <span className='material-symbols-outlined'>album</span>
                     <strong> {car3[lang]}</strong>
-                    {car.perevod}
+                    {car?.perevod}
                 </li>
                 <li className='card__item'>
                     <span className='material-symbols-outlined'>speed</span>
                     <strong> {car4[lang]}</strong>
-                    {car.yurgani}
+                    {car?.yurgani}
                 </li>
             </ul>
             <div className='card__line'></div>
             <div className='card__price'>
-                Цена: <strong>{Number(car.narxi).toLocaleString().replace(/,/g, ' ')}</strong>{' '}
+                Цена: <strong>{Number(car?.narxi).toLocaleString().replace(/,/g, ' ')}</strong>{' '}
                 <span>UZS</span>
             </div>
-            <Link to={`/more/${car._id}`} className='card__button'>
+            <Link to={`/more/${car?._id}`} className='card__button'>
                 {car5[lang]}
             </Link>
             <div className='card__add'>

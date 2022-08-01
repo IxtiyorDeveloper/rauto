@@ -8,7 +8,6 @@ import order from "../../images/order.png";
 import moderat from "../../assets/icons/moderator.png";
 import bankUser from "../../assets/icons/bank.png";
 import "./admin_header.css";
-import {Badge} from "antd";
 import React, {useEffect, useState} from "react";
 
 function AdminHeader() {
@@ -60,9 +59,9 @@ function AdminHeader() {
                                 </li>
                             }
                             {
-                                type === "user" &&
+                                (type === "user" || type === "admin") &&
                                 <li>
-                                    <Link to="/admin/card/add" className="waves-effect">
+                                    <Link to="/admin/cards" className="waves-effect">
                                         <i className="mdi  mdi-message-text-outline text-white bg-warning">
                                             <img src={newsIcon} alt="" width={20}/>
                                         </i>
@@ -71,15 +70,15 @@ function AdminHeader() {
                                 </li>
                             }
                             {
-                                type === "user" &&
-                                <li>
-                                    <Link to="/admin/application/add" className="waves-effect">
-                                        <i className="mdi  mdi-message-text-outline text-white bg-warning">
-                                            <img src={newsIcon} alt="" width={20}/>
-                                        </i>
-                                        <span>Ariza qo'shish</span>
-                                    </Link>
-                                </li>
+                                // type === "user" &&
+                                // <li>
+                                //     <Link to="/admin/application/add" className="waves-effect">
+                                //         <i className="mdi  mdi-message-text-outline text-white bg-warning">
+                                //             <img src={newsIcon} alt="" width={20}/>
+                                //         </i>
+                                //         <span>Ariza qo'shish</span>
+                                //     </Link>
+                                // </li>
                             }
                             {
                                 type === "admin" &&
@@ -116,7 +115,6 @@ function AdminHeader() {
                                             </i>
                                             <span> {applications[lang]}</span>
                                         </div>
-                                        <Badge count={5}/>
                                     </Link>
                                 </li>
                             }
@@ -124,7 +122,7 @@ function AdminHeader() {
                                 type === "admin" &&
                                 <li>
                                     <Link
-                                        to="/admin/applications"
+                                        to="/admin/moderators"
                                         className="waves-effect d-flex justify-content-between"
                                     >
                                         <div>
@@ -133,7 +131,6 @@ function AdminHeader() {
                                             </i>
                                             <span>Bank xodimi</span>
                                         </div>
-                                        <Badge count={5}/>
                                     </Link>
                                 </li>
                             }
@@ -141,7 +138,7 @@ function AdminHeader() {
                                 type === "admin" &&
                                 <li>
                                     <Link
-                                        to="/admin/applications"
+                                        to="/admin/users"
                                         className="waves-effect d-flex justify-content-between"
                                     >
                                         <div>
@@ -150,7 +147,22 @@ function AdminHeader() {
                                             </i>
                                             <span>Barcha foydalanuvchilar</span>
                                         </div>
-                                        <Badge count={5}/>
+                                    </Link>
+                                </li>
+                            }
+                            {
+                                type === "admin" &&
+                                <li>
+                                    <Link
+                                        to="/admin/info"
+                                        className="waves-effect d-flex justify-content-between"
+                                    >
+                                        <div>
+                                            <i className="mdi mdi-trending-up bg-warning text-white">
+                                                <img src={bankUser} alt="" width={20}/>
+                                            </i>
+                                            <span>Malumotlar</span>
+                                        </div>
                                     </Link>
                                 </li>
                             }

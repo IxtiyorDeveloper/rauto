@@ -13,6 +13,11 @@ body {
     font-size: 15px;
 }
 
+.s-contain {
+    width: 100%;
+    padding: 20px;
+}
+
 .call-button {
     position: fixed;
     bottom: 50px;
@@ -802,11 +807,11 @@ dt {
     opacity: 0;
     background: rgba(0, 0, 0, 0.2);
     background: radial-gradient(
-        rgba(0, 0, 0, 0.2) 0,
-        rgba(0, 0, 0, 0.3) 40%,
-        rgba(0, 0, 0, 0.4) 50%,
-        rgba(0, 0, 0, 0.5) 60%,
-        rgba(255, 255, 255, 0) 70%
+            rgba(0, 0, 0, 0.2) 0,
+            rgba(0, 0, 0, 0.3) 40%,
+            rgba(0, 0, 0, 0.4) 50%,
+            rgba(0, 0, 0, 0.5) 60%,
+            rgba(255, 255, 255, 0) 70%
     );
     -webkit-transition: all 0.5s ease-out;
     transition: all 0.5s ease-out;
@@ -823,11 +828,11 @@ dt {
 .waves-effect.waves-light .waves-ripple {
     background: rgba(255, 255, 255, 0.4);
     background: radial-gradient(
-        rgba(255, 255, 255, 0.2) 0,
-        rgba(255, 255, 255, 0.3) 40%,
-        rgba(255, 255, 255, 0.4) 50%,
-        rgba(255, 255, 255, 0.5) 60%,
-        rgba(255, 255, 255, 0) 70%
+            rgba(255, 255, 255, 0.2) 0,
+            rgba(255, 255, 255, 0.3) 40%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0.5) 60%,
+            rgba(255, 255, 255, 0) 70%
     );
 }
 
@@ -1231,9 +1236,9 @@ dt {
 }
 
 .page_body_admin a {
-    padding: 7px 15px;
-    font-size: 15px;
-    color: #fff;
+    /*padding: 7px 15px;*/
+    /*font-size: 15px;*/
+    /*color: #fff;*/
 }
 
 .page_body_admin h4 {
@@ -2761,7 +2766,7 @@ table.focus-on tbody tr.focused td {
     border: 1px solid midnightblue;
 }
 
-.team-img-two{
+.team-img-two {
     max-width: 370px;
 }
 
@@ -2806,12 +2811,12 @@ ul.show {
     margin: 0;
 }
 
-.social_icon_container{
+.social_icon_container {
     display: flex;
     width: 100%;
 }
 
-.social_icon{
+.social_icon {
     margin-right: 7px;
     padding: 7px;
     width: 40px;
@@ -2823,7 +2828,145 @@ ul.show {
     background-color: #001aff;
 }
 
-.social_icon_yt{
+.social_icon_yt {
     padding: 7px;
     width: 50px;
+}
+
+.submit {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.w30 {
+    width: 30%;
+}
+
+.w70 {
+    width: 70%;
+}
+
+.mainWrapper {
+    display: flex;
+    width: 100%;
+    padding-top: 50px;
+}
+
+.sp-img {
+    width: 250px;
+}
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 40vmin;
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.ExcelTable2007 {
+    border: 1px solid #B0CBEF;
+    border-width: 1px 0px 0px 1px;
+    font-size: 11pt;
+    font-family: Calibri;
+    font-weight: 100;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    padding: 10px;
+    /*height: 100vh;*/
+    /*overflow: scroll;*/
+}
+
+.ExcelTable2007 TH {
+    background-repeat: repeat-x;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid #9EB6CE;
+    border-width: 0px 1px 1px 0px;
+    height: 17px;
+    line-height: 17px;
+}
+
+.ExcelTable2007 TD {
+    border: 0px;
+    background-color: white;
+    padding: 0px 4px 0px 2px;
+    border: 1px solid #D0D7E5;
+    border-width: 0px 1px 1px 0px;
+}
+
+.ExcelTable2007 TD B {
+    border: 0px;
+    background-color: white;
+    font-weight: bold;
+}
+
+.ExcelTable2007 TD.heading {
+    background-color: #E4ECF7;
+    text-align: center;
+    border: 1px solid #9EB6CE;
+    border-width: 0px 1px 1px 0px;
+    font-weight: bold;
+}
+
+TH {
+    text-align: center;
+}
+
+.jumbotron-background {
+    border-radius: 0rem !important;
+    color: white
+}
+
+.jumbotron-button {
+    color: #fff !important;
+    background-color: transparent !important;
+    border-color: lightgrey !important;
+}
+
+.jumbotron-button:hover {
+    color: #fff !important;
+    background-color: #5a6268 !important;
+    border-color: #545b62 !important;
+}
+
+.restrict-card {
+    /*height: 175px;*/
+}
+.invisible{
+    display: none!important;
+}
+
+.wre{
+    padding-top: 100px;
+    width: 80%;
+    margin-left: 250px !important;
 }

@@ -43,6 +43,11 @@ import Ourclients from "./pages/ourclients/ourclients";
 import UserLogin from "./pages/user_login/user_login";
 import Register from "./pages/register/register";
 import RequireAuth from "./utils/privateRoute";
+import UsersAdmin from "./pages/Users/Users";
+import BanksAdmin from "./pages/banks/Banks";
+import ModeratorsAdmin from "./pages/moderator/moderator";
+import SingleCar from "./pages/SingleCar/SingleCar"
+import InfoPage from "./pages/InfoPage/InfoPage";
 
 function App() {
     const location = useLocation();
@@ -81,12 +86,14 @@ function App() {
                 <Route path="/admin/orders" element={<OrdersAdmin/>}/>
                 <Route path="/admin/news_edit/:id" element={<EditNews/>}/>
                 <Route path="/admin/cards" element={<RequireAuth><CardsAdmin/></RequireAuth>}/>
+                <Route path="/admin/card/:id" element={<RequireAuth><SingleCar/></RequireAuth>}/>
                 <Route path="/admin/card/add" element={<AddCard/>}/>
                 <Route path="/admin/card/edit/:id" element={<AddCard/>}/>
                 <Route path="/admin/clients" element={<AdminClient/>}/>
                 <Route path="/admin/clients/add" element={<AddClients/>}/>
                 <Route path="/admin/clients/edit/:id" element={<AddClients/>}/>
                 <Route path="/admin/statistic/all" element={<StatisticsPage/>}/>
+                <Route path="/admin/info" element={<InfoPage/>}/>
                 <Route path="/aboutus" element={<Aboutus/>}/>
                 <Route path="/" element={<Home addCompare={addCompare}/>}/>
                 <Route
@@ -110,8 +117,11 @@ function App() {
                 <Route path="/cars" element={<Cars addCompare={addCompare}/>}/>
                 <Route path="/credit/:id" element={<CreditAuto/>}/>
                 <Route path="/admin/applications" element={<Applications/>}/>
+                <Route path="/admin/users" element={<UsersAdmin/>}/>
+                <Route path="/admin/moderators" element={<ModeratorsAdmin/>}/>
+                <Route path="/admin/banks" element={<BanksAdmin/>}/>
                 <Route path="/useful" element={<Polezniy/>}/>
-                <Route path="/admin/application/:id" element={<Applications/>}/>
+                <Route path="/admin/applications/:id" element={<Applications/>}/>
             </Routes>
             <Button
                 shape="circle"

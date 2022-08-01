@@ -1,42 +1,64 @@
-import { useState, useEffect } from 'react'
-import car from '../../images/car.png'
+import {useEffect, useState} from 'react'
 import pageIcon from '../../images/landing-page.png'
 import priceTag from '../../images/price-tag.png'
 import order from '../../images/order.png'
 import axios from 'axios'
+import {MainApi} from "../../api";
 
 
 function Statistics() {
-    const [news, setNews] = useState([])
+    const [user, setUser] = useState(0)
+    const [car, setCar] = useState(0)
+    const [client, setClient] = useState(0)
+    const [bank, setBank] = useState(0)
+    const [mad, setMad] = useState(0)
+    const [ord, setOrd] = useState(0)
+
     useEffect(() => {
-        axios.get('http://185.196.214.145:5000/news/all')
-            .then((response) => {
-                return response.json();
-            })
+        axios.get(`${MainApi}/user/all`)
             .then((data) => {
-                setNews(data)
+                setUser(data?.data?.data?.length)
+            });
+
+    }, [])
+
+
+    useEffect(() => {
+        axios.get(`${MainApi}/car/all`)
+            .then((data) => {
+                setCar(data?.data?.getAllmowin?.length)
             });
     }, [])
-    const [announcements, setAnnouncements] = useState([])
+
+
     useEffect(() => {
-        axios.get('http://185.196.214.145:5000/announcements/all')
-            .then((response) => {
-                return response.json();
-            })
+        axios.get(`${MainApi}/client/all`)
             .then((data) => {
-                setAnnouncements(data)
+                setClient(data?.data?.length)
             });
     }, [])
-    const [pages, setPages] = useState([])
+
     useEffect(() => {
-        axios.get('http://185.196.214.145:5000/sub_categories/all')
-            .then((response) => {
-                return response.json();
-            })
+        axios.get(`${MainApi}/bank/all`)
             .then((data) => {
-                setPages(data)
+                setBank(data?.data?.bank?.length)
             });
     }, [])
+
+    useEffect(() => {
+        axios.get(`${MainApi}/maderator/all`)
+            .then((data) => {
+                setMad(data?.data?.data?.length)
+            });
+    }, [])
+
+    useEffect(() => {
+        axios.get(`${MainApi}/order/all`)
+            .then((data) => {
+                setOrd(data?.data?.length)
+            });
+    }, [])
+
     return (
         <>
             <div className="row pt-3 statistics_wrapper">
@@ -45,13 +67,13 @@ function Statistics() {
                     <div className="card  bg-primary_all">
                         <div className="card-heading p-4">
                             <div className="mini-stat-icon float-right">
-                                <img src={priceTag} alt="" width={35} />
+                                <img src={priceTag} alt="" width={35}/>
                             </div>
                             <div>
-                                <h5 className="font-16">Barcha Maxsus takliflar</h5>
+                                <h5 className="font-16">Barcha Foydalanuvchilar</h5>
                             </div>
                             <h3 className="mt-4">
-                                {announcements.length}
+                                {user}
                             </h3>
                         </div>
                     </div>
@@ -60,13 +82,13 @@ function Statistics() {
                     <div className="card  bg-primary_all">
                         <div className="card-heading p-4">
                             <div className="mini-stat-icon float-right">
-                                <img src={car} alt="" width={35} />
+                                <img src={car} alt="" width={35}/>
                             </div>
                             <div>
                                 <h5 className="font-16">Barcha Avtomobillar</h5>
                             </div>
                             <h3 className="mt-4">
-                                {news.length}
+                                {car}
                             </h3>
                         </div>
                     </div>
@@ -75,13 +97,13 @@ function Statistics() {
                     <div className="card  bg-primary_all">
                         <div className="card-heading p-4">
                             <div className="mini-stat-icon float-right">
-                                <img src={order} alt="" width={35} />
+                                <img src={order} alt="" width={35}/>
                             </div>
                             <div>
-                                <h5 className="font-16">Barcha buyurtmalar</h5>
+                                <h5 className="font-16">Barcha Klientlar</h5>
                             </div>
                             <h3 className="mt-4">
-                                {news.length}
+                                {client}
                             </h3>
                         </div>
                     </div>
@@ -90,13 +112,43 @@ function Statistics() {
                     <div className="card  bg-primary_all">
                         <div className="card-heading p-4">
                             <div className="mini-stat-icon float-right">
-                                <img src={pageIcon} alt="" width={25} />
+                                <img src={pageIcon} alt="" width={25}/>
                             </div>
                             <div>
-                                <h5 className="font-16">Barcha Sahifalar</h5>
+                                <h5 className="font-16">Barcha bankka tushgan arizalar</h5>
                             </div>
                             <h3 className="mt-4">
-                                {pages.length}
+                                {bank}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-sm-6 col-xl-3">
+                    <div className="card  bg-primary_all">
+                        <div className="card-heading p-4">
+                            <div className="mini-stat-icon float-right">
+                                <img src={pageIcon} alt="" width={25}/>
+                            </div>
+                            <div>
+                                <h5 className="font-16">Barcha Bank xodimi</h5>
+                            </div>
+                            <h3 className="mt-4">
+                                {mad}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-sm-6 col-xl-3">
+                    <div className="card  bg-primary_all">
+                        <div className="card-heading p-4">
+                            <div className="mini-stat-icon float-right">
+                                <img src={pageIcon} alt="" width={25}/>
+                            </div>
+                            <div>
+                                <h5 className="font-16">Barcha Buyurtmalar</h5>
+                            </div>
+                            <h3 className="mt-4">
+                                {ord}
                             </h3>
                         </div>
                     </div>

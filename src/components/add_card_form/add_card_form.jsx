@@ -49,7 +49,7 @@ function AddCardForm() {
                 formData.append(key, values[key])
         )
         file.forEach(file => formData.append('photo', file))
-
+        formData.append("userId", localStorage.getItem("user_id"))
         if (!!id) dispatch(editCar(formData, id))
         else dispatch(addCar(formData))
     }
@@ -58,7 +58,7 @@ function AddCardForm() {
         if (!!localStorage.getItem("admin_token"))
             setData(fields)
         else setData(fields.filter(i => i.key !== "aksiya"))
-    },[fields])
+    }, [fields])
 
     return (
         <div className='content'>

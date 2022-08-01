@@ -1,22 +1,54 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {getCars} from "../../store/car/car";
 import {useNavigate} from "react-router";
+import Cars from "../cars/cars";
+import axios from "axios";
+import {MainApi} from "../../api";
+import {Modal} from "antd";
+import {ExclamationCircleOutlined} from "@ant-design/icons";
 
 function AdminCards() {
     const dispatch = useDispatch();
     const navigate = useNavigate()
+    const [cars, setCars] = useState([])
+    const [type, setType] = useState("")
+
+    useEffect(() => {
+        if (!!localStorage.getItem("user_token")) {
+            setType("user")
+        }
+        if (!!localStorage.getItem("bank_token")) {
+            setType("bank")
+        }
+        if (!!localStorage.getItem("admin_token")) {
+            setType("admin")
+        }
+    }, [])
+
+    const getCars = async () => {
+        await axios
+            .get(`${MainApi}/car/all`)
+            .then((res) => setCars(res.data?.getAllmowin))
+            .catch((err) => new Error(err));
+    };
 
     const {isLoading} = useSelector((state) => state.car);
 
-    const deleteOrder = (id) => {
-        // axios
-        //     .delete(`http://185.196.214.145:5000/Car/${id}`)
-        //     .then((res) => {
-        //         dispatch(getCars());
-        //     })
-        //     .catch((err) => console.log(err));
+    const deleteCar = (id) => {
+        Modal.confirm({
+            centered: true,
+            title: "Moshina o'chirish",
+            icon: <ExclamationCircleOutlined/>,
+            onOk() {
+                axios
+                    .delete(`${MainApi}/car/${id}`)
+                    .then((res) => {
+                        dispatch(getCars());
+                    })
+                    .catch((err) => console.log(err));
+            },
+        })
     };
 
     const logout = () => {
@@ -25,10 +57,8 @@ function AdminCards() {
     }
 
     useEffect(() => {
-        dispatch(getCars());
+        getCars();
     }, []);
-
-    const cars = []
 
     return (
         <div className="row pt-5 page_list">
@@ -60,75 +90,16 @@ function AdminCards() {
                             Avtomashina qo'shish
                         </Link>
                         <h4 className="mt-0 mb-4">Barcha Avtomashinalar ro'yhati</h4>
-                        <div className="table-responsive mt-5">
-                            <table className="table table-hover">
-                                <thead className="thead-dark">
-                                <tr className="textAlign">
-                                    <th scope="col">Rasm</th>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Marka</th>
-                                    <th scope="col">Model</th>
-                                    <th scope="col">Havola</th>
-                                    <th scope="col">O'zgartirish</th>
-                                    <th scope="col">O'chirish</th>
-                                </tr>
-                                </thead>
-                                <tbody className="thead-dark">
-                                {!isLoading && !!cars.length ? (
-                                    cars?.map((item, index) => (
-                                        <tr key={index}>
-                                            <td style={{width: "130px", height: "100px"}}>
-                                                <img
-                                                    src={item.photo[0]}
-                                                    alt="photo"
-                                                    style={{objectFit: "cover"}}
-                                                    width="100%"
-                                                    height="100%"
-                                                />
-                                            </td>
-                                            <td>{item._id}</td>
-                                            <td>{item.marka}</td>
-                                            <td>{item.madel}</td>
-                                            <td>
-                                                <Link
-                                                    target="_blank"
-                                                    style={{color: "blue"}}
-                                                    to={`/more/${item._id}`}
-                                                >
-                                                    To product
-                                                </Link>
-                                            </td>
-                                            <td>
-                                                <Link
-                                                    to={`/admin/card/edit/${item._id}`}
-                                                    style={{
-                                                        border: "1px solid black",
-                                                        padding: "5px 10px",
-                                                        color: "blue",
-                                                    }}
-                                                >
-                                                    Edit
-                                                </Link>
-                                            </td>
-                                            <td>
-                                                <button
-                                                    onClick={() => deleteOrder(item._id)}
-                                                    style={{
-                                                        border: "1px solid black",
-                                                        padding: "5px 10px",
-                                                    }}
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <h1>Loading...</h1>
-                                )}
-                                </tbody>
-                            </table>
-                        </div>
+                        {
+                            type === "user" ?
+                                <Cars
+                                    dataSource={cars?.filter(i => i?.userId?.toLowerCase()
+                                        ===
+                                        localStorage?.getItem("user_id").toLowerCase())}/>
+                                :
+                                <Cars
+                                    dataSource={cars} deleteCar={deleteCar}/>
+                        }
                     </div>
                 </div>
             </div>

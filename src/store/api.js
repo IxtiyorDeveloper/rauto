@@ -4,8 +4,8 @@ import {MainApi} from "../api";
 export const rauto = createAction('rauto')
 
 // client
-export const getclients = 'client/all'
-export const addclient = 'client/add'
+export const getclients = `${MainApi}/client/all`
+export const addclient = `${MainApi}/client/add`
 export const getclient = 'client/' // :id
 export const editclient = 'client/' // :id
 

@@ -77,6 +77,7 @@ const Header = (props) => {
         const searchBtns = document.querySelectorAll(".search");
         const searchInput = document.querySelector(".search-input");
         const closeSearch = document.querySelector(".close-search");
+
         if (searchBtns.length > 0) {
             for (let index = 0; index < searchBtns.length; index++) {
                 const searchBtn = searchBtns[index];
@@ -602,7 +603,8 @@ const Header = (props) => {
                 <span className="headers__nav-icon">
                   <span className="material-symbols-outlined">person</span>
                 </span>
-                                <span className="headers__nav-link tooltips">{Kirish[lang]}
+                                <span className="headers__nav-link tooltips">
+                                    {Kirish[lang]}
                                     <ul className="tooltipstexttt">
                     <Link to="/sign-in">
                       <li className="menu-item">{f10[lang]}</li>

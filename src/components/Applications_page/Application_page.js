@@ -1,43 +1,121 @@
-import { Card, Col, Row } from 'antd'
+import {Col, Row, Spin, Table} from 'antd'
+import {useParams} from "react-router";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+import {MainApi} from "../../api";
+import { Image } from 'antd';
 
 const Application_page = () => {
-    return (
-        <div className='bg-white p-4 w-100'>
-            <h4>Hujjatlar rasmlari</h4>
-            <Row gutter={16}>
-                <Col span={4}>
-                    <Card className='py-5' />
-                </Col>
-                <Col span={4}>
-                    <Card className='py-5' />
-                </Col>
-                <Col span={4}>
-                    <Card className='py-5' />
-                </Col>
-            </Row>
-            <hr />
+    const {id} = useParams()
+    const [bank, setBank] = useState([])
+    const [loading, setLoading] = useState(false)
+    const columns = [
+        //     {
+        //     title: 'photo',
+        //     dataIndex: 'photo',
+        //     key: 'photo',
+        //     render: (props) => {
+        //         return (
+        //             <img src={props[0]} alt="props" className="s-img" width={25} height={25}/>
+        //         )
+        //     }
+        // },
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Surname',
+            dataIndex: 'surname',
+            key: 'surname',
+        },
+        {
+            title: 'Father name',
+            dataIndex: 'father_name',
+            key: 'father_name',
+        },
+        {
+            title: 'Phone',
+            dataIndex: 'phone',
+            key: 'phone',
+        },
+        {
+            title: 'Qarindoshini nomeri',
+            dataIndex: 'relative_number',
+            key: 'relative_number',
+        },
+        {
+            title: 'Uyini nomeri',
+            dataIndex: 'house_number',
+            key: 'house_number',
+        },
+        {
+            title: 'Qarindoshini nomeri 2',
+            dataIndex: 'relative_number2',
+            key: 'relative_number2',
+        },
+        {
+            title: 'Maosh',
+            dataIndex: 'maosh',
+            key: 'maosh',
+        }]
 
-            <table className='table table-hover table-bordered'>
-                <thead className='thead-dark'>
-                    <tr className='textAlign'>
-                        <th scope='col'>F.I.Sh</th>
-                        <td>Familya</td>
-                        <td>Ism</td>
-                        <td>Sharif</td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody className='thead-dark'>
-                    <tr>
-                        <th>Tel. raqamlari</th>
-                        <td>Shaxsiy raqam: +998 123 45 67</td>
-                        <td>Uy raqami / 2-shax. raq: +998 123 45 67</td>
-                        <td>Yaqin qarindosh: +998 123 45 67</td>
-                        <td>Yaqin qarindosh: +998 123 45 67</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    const getBank = async (id) => {
+        setLoading(true)
+        await axios
+            .get(`${MainApi}/bank/${id}`)
+            .then((res) => {
+                setBank([res.data?.bank])
+            })
+            .catch((err) => {
+                    new Error(err)
+                }
+            );
+    };
+
+    useEffect(() => {
+        if (!!id) {
+            getBank(id).then(() => setLoading(false))
+        }
+    }, [id])
+
+    return (
+        <>
+            {
+                !!bank.length ?
+                    <div className='bg-white p-4 w-100'>
+                        <h4>Hujjatlar rasmlari</h4>
+                        <Row gutter={16}>
+                            <Col span={4}>
+                                <Image
+                                    width={200}
+                                    src={bank[0].photo?.[0]}
+                                />
+                            </Col>
+                            <Col span={4}>
+                                <Image
+                                    width={200}
+                                    src={bank[0].photo?.[1]}
+                                />
+                            </Col>
+                            <Col span={4}>
+                                <Image
+                                    width={200}
+                                    src={bank[0].photo?.[2]}
+                                />
+                            </Col>
+                        </Row>
+                        <hr/>
+                        <Table dataSource={bank} columns={columns} scroll={{x: "max-content"}}/>
+                    </div>
+                    :
+                    <div>
+                        No data
+                    </div>
+            }
+
+        </>
     )
 }
 
